@@ -6,20 +6,60 @@
   <title>hello world</title>
   <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
   <style>
-    h1 {
+    body {
+      transition: all 0.5s;
+    }
+
+    #title {
       font-size: 8vw;
     } 
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
   </style>
 
 
 </head>
-<body>
-  <main>
-    <h1 class="flex  justify-center h-screen items-center font-bold whitespace-nowrap">
+<body >
+  <nav class="mt-4 m-auto bg-gray-400 opacity-50 flex justify-center items-center p-2">
+    <a class="toggle" href="#">toggle</a>
+  </nav>
+  <main class="mt-20 max-w-4xl m-auto bg-gray-200 flex justify-center h-screen items-center ">
+    <div id="title" class="font-bold whitespace-nowrap">
       Hello World!
-    </h1>
+    </div>
   </main>
+  <script>
+    const menuToggle = document.querySelector('nav .toggle');
+    const nav = document.querySelector('nav');
+    const main = document.querySelector('main');
+    nav.style.width = main.offsetWidth + 'px';
+    menuToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('toggle menu');
+      nav.classList.toggle('open');
+      if (nav.classList.contains('open')) {
+        gsap.to('nav', {width: '100%', duration: 0.5, ease: 'bounce.out'});
+        gsap.to('nav', {height: '200px', duration: 0.5, delay: 0.3, ease: 'bounce.out'});
+      } else {
+        gsap.to('nav', {height: '50px', duration: 0.5, ease: 'bounce.out'});
+        gsap.to('nav', {width: (main.getBoundingClientRect().width + 'px'), duration: 0.5, delay: 0.1, ease: 'bounce.out'});
+
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (!nav.classList.contains('open')) {
+        nav.style.width = main.offsetWidth + 'px';
+      }
+    });
+  </script>
 </body>
 </html>
