@@ -7,10 +7,11 @@
   <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.2.1/hamburgers.min.css">
 
   <style>
     body {
-      transition: all 0.5s;
+   
     }
 
     #title {
@@ -24,41 +25,46 @@
       transform: translateX(-50%);
     }
 
+    .hamburger-inner, .hamburger-inner:after, .hamburger-inner:before,
+    .hamburger.is-active .hamburger-inner, .hamburger.is-active .hamburger-inner:after, .hamburger.is-active .hamburger-inner:before {
+      background-color: white;
+    }
+
   </style>
-
-
 </head>
 <body >
-  <nav class="mt-4 m-auto bg-gray-400 opacity-50 flex justify-center items-center p-2">
-    <a class="toggle" href="#">toggle</a>
+  <nav class="mt-4 h-20 m-auto bg-black opacity-80 flex p-3 rounded-md flex items-start">
+    <button id="menuToggle" class="hamburger hamburger--slider" type="button">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button> 
   </nav>
-  <main class="mt-20 max-w-4xl m-auto bg-gray-200 flex justify-center h-screen items-center ">
+  <main class="mt-28 max-w-4xl m-auto bg-gray-200 flex justify-center h-screen items-center rounded-md">
     <div id="title" class="font-bold whitespace-nowrap">
       Hello World!
     </div>
   </main>
   <script>
-    const menuToggle = document.querySelector('nav .toggle');
+    const menuToggle = document.querySelector('#menuToggle');
     const nav = document.querySelector('nav');
     const main = document.querySelector('main');
+    const animDuration = 0.2; 
     nav.style.width = main.offsetWidth + 'px';
+
+    const timeline1 = gsap.timeline({paused: true, defaults: {duration: animDuration, ease: 'ease.out'}});
+    timeline1.to('nav', {width: 'calc(100% - 32px)'});
+    timeline1.to('nav', {height: '400px', delay: animDuration*0.8});
+    
     menuToggle.addEventListener('click', (e) => {
       e.preventDefault();
-      console.log('toggle menu');
-      nav.classList.toggle('open');
-      if (nav.classList.contains('open')) {
-        gsap.to('nav', {width: '100%', duration: 0.5, ease: 'bounce.out'});
-        gsap.to('nav', {height: '200px', duration: 0.5, delay: 0.3, ease: 'bounce.out'});
-      } else {
-        gsap.to('nav', {height: '50px', duration: 0.5, ease: 'bounce.out'});
-        gsap.to('nav', {width: (main.getBoundingClientRect().width + 'px'), duration: 0.5, delay: 0.1, ease: 'bounce.out'});
-
-      }
+      console.log('toggle');
+      menuToggle.classList.toggle('is-active');
+      nav.classList.toggle('open')
+      nav.classList.contains('open') ? timeline1.play() : timeline1.reverse();
     });
-    window.addEventListener('resize', () => {
-      if (!nav.classList.contains('open')) {
-        nav.style.width = main.offsetWidth + 'px';
-      }
+    window.addEventListener('resize', () => { 
+      if (!menuToggle.classList.contains('open')) nav.style.width = main.offsetWidth + 'px'
     });
   </script>
 </body>
