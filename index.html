@@ -33,12 +33,20 @@
   </style>
 </head>
 <body >
-  <nav class="mt-4 h-20 m-auto bg-black opacity-80 flex p-3 rounded-md flex items-start">
-    <button id="menuToggle" class="hamburger hamburger--slider" type="button">
+  <nav class="mt-4 h-20 m-auto bg-black opacity-80 flex p-3 rounded-md flex items-start overflow-hidden">
+    <button id="menuToggle" class="hamburger hamburger--vortex" type="button">
       <span class="hamburger-box">
         <span class="hamburger-inner"></span>
       </span>
     </button> 
+    <ul id="items" class="mt-20">
+      <!-- menu items will go here -->
+      <li class="text-4xl text-white ml-4 mb-4">Home</li>
+      <li class="text-4xl text-white ml-4 mb-4">About</li>
+      <li class="text-4xl text-white ml-4 mb-4">Services</li>
+      <li class="text-4xl text-white ml-4 mb-4">Contact</li>
+    </ul>
+    
   </nav>
   <main class="mt-28 max-w-4xl m-auto bg-gray-200 flex justify-center h-screen items-center rounded-md">
     <div id="title" class="font-bold whitespace-nowrap">
@@ -46,20 +54,28 @@
     </div>
   </main>
   <script>
+
+    const a = ["mele","pere","banana"];
+    const b = {x: 10, y:20};
+
+
+
     const menuToggle = document.querySelector('#menuToggle');
     const nav = document.querySelector('nav');
     const main = document.querySelector('main');
-    const animDuration = 0.2; 
+    const animDuration =.5; 
     nav.style.width = main.offsetWidth + 'px';
 
+    
     const timeline1 = gsap.timeline({paused: true, defaults: {duration: animDuration, ease: 'ease.out'}});
     timeline1.to('nav', {width: 'calc(100% - 32px)'});
-    timeline1.to('nav', {height: '400px', delay: animDuration*0.8});
+    timeline1.to('nav', {height: '400px'});
+    timeline1.from('nav ul li', {opacity: 0, y: 50, stagger: 0.1}, "-=0.3");
     
     menuToggle.addEventListener('click', (e) => {
       e.preventDefault();
       console.log('toggle');
-      menuToggle.classList.toggle('is-active');
+      menuToggle.classList.toggle('is-active'); 
       nav.classList.toggle('open')
       nav.classList.contains('open') ? timeline1.play() : timeline1.reverse();
     });
