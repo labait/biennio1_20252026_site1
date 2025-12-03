@@ -3,85 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hello world</title>
-  <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>My Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hamburgers/1.2.1/hamburgers.min.css">
-
-  <style>
-    body {
-   
-    }
-
-    #title {
-      font-size: 8vw;
-    } 
-
-    nav {
-      position: fixed;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .hamburger-inner, .hamburger-inner:after, .hamburger-inner:before,
-    .hamburger.is-active .hamburger-inner, .hamburger.is-active .hamburger-inner:after, .hamburger.is-active .hamburger-inner:before {
-      background-color: white;
-    }
-
-  </style>
 </head>
-<body >
-  <nav class="mt-4 h-20 m-auto bg-black opacity-80 flex p-3 rounded-md flex items-start overflow-hidden">
-    <button id="menuToggle" class="hamburger hamburger--vortex" type="button">
-      <span class="hamburger-box">
-        <span class="hamburger-inner"></span>
-      </span>
-    </button> 
-    <ul id="items" class="mt-20">
-      <!-- menu items will go here -->
-      <li class="text-4xl text-white ml-4 mb-4">Home</li>
-      <li class="text-4xl text-white ml-4 mb-4">About</li>
-      <li class="text-4xl text-white ml-4 mb-4">Services</li>
-      <li class="text-4xl text-white ml-4 mb-4">Contact</li>
-    </ul>
-    
-  </nav>
-  <main class="mt-28 max-w-4xl m-auto bg-gray-200 flex justify-center h-screen items-center rounded-md">
-    <div id="title" class="font-bold whitespace-nowrap">
-      Hello World!
-    </div>
+<body>
+
+  <main class="min-h-screen flex flex-col justify-center items-center ">
+    <h1 class="text-[7vw] font-bold mb-8">Welcome to my Page</h1>
   </main>
-  <script>
-
-    const a = ["mele","pere","banana"];
-    const b = {x: 10, y:20};
-
-
-
-    const menuToggle = document.querySelector('#menuToggle');
-    const nav = document.querySelector('nav');
-    const main = document.querySelector('main');
-    const animDuration =.5; 
-    nav.style.width = main.offsetWidth + 'px';
-
-    
-    const timeline1 = gsap.timeline({paused: true, defaults: {duration: animDuration, ease: 'ease.out'}});
-    timeline1.to('nav', {width: 'calc(100% - 32px)'});
-    timeline1.to('nav', {height: '400px'});
-    timeline1.from('nav ul li', {opacity: 0, y: 50, stagger: 0.1}, "-=0.3");
-    
-    menuToggle.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('toggle');
-      menuToggle.classList.toggle('is-active'); 
-      nav.classList.toggle('open')
-      nav.classList.contains('open') ? timeline1.play() : timeline1.reverse();
-    });
-    window.addEventListener('resize', () => { 
-      if (!menuToggle.classList.contains('open')) nav.style.width = main.offsetWidth + 'px'
-    });
-  </script>
 </body>
 </html>
