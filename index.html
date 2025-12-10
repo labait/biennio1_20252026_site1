@@ -37,16 +37,13 @@
   </main>
 </body>
 <script>
-  /*
-  document.getElementById('subscribeForm').addEventListener('submit', function(e) {
+  /* */
+  document.getElementById('subscribeForm').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('email').value;
-    console.log('Iscrizione email:', email);
-    //compose an email to subscribe the user
-    const mailtoLink = `mailto:subscribe@example.com?subject=Iscrizione%20Newsletter&body=Vorrei%20iscrivermi%20alla%20newsletter.%20La%20mia%20email%20è:%20${encodeURIComponent(email)}`;
-    window.location.href = mailtoLink;
+    console.log('Form submitted, email:', email);
   });
-  */
+ 
 </script>
 </body>
 </html>

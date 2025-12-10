@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>grid</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+  <div id="loading" class="h-screen w-screen absolute bg-white z-20">
+    <div class="flex justify-center items-center h-full">
+      <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+    </div>
+  </div>
+  <div class="container mx-auto z-1">
+    <div id="columns" class=""></div>
+  </div>
+
+  <script>
+    const loading = document.getElementById('loading');
+    const columnsContainer = document.getElementById('columns');
+    const images = [];
+
+    const defineImages = () => {
+      const proportions = [
+        1, 1.5, 0.75, 1.33, 0.66, 2, 3
+      ]
+      
+      for(let i=0; i<20; i++) {
+        const proportion = proportions[Math.floor(Math.random() * proportions.length)];
+        const width = 800;
+        const height = Math.floor(width / proportion);
+        const url = `https://picsum.photos/${width}/${height}?random=${i}`;
+        console.log(url);
+        images.push(url);
+      }
+    }
+
+    const setup = () => {
+      const count = Math.ceil(window.innerWidth/360);
+      console.log(`columns: ${count}`);
+      columnsContainer.innerHTML = '';
+      // n columns
+      for(let i=0; i<count; i++) {
+        const col = document.createElement('div');
+        col.className = "flex flex-col gap-4";
+        columnsContainer.appendChild(col);
+      }
+      positionImages();
+      columnsContainer.className = `grid grid-cols-${count} gap-4`;
+      loading.style.display = 'none';
+    }
+    
+    
+    const positionImages = () => {
+      for(let i=0; i<images.length; i++) {
+        const url = images[i];
+        const img = document.createElement('img');
+        img.src = url;
+        img.className = "w-full rounded cursor-pointer shadow-sm grayscale hover:grayscale-0";
+        const col = columnsContainer.children[i % columnsContainer.children.length];
+        col.appendChild(img);
+      } 
+    } 
+
+    defineImages();
+    setup();
+    let timeout;
+    window.addEventListener('resize', () => {
+      loading.style.display = 'block';
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        setup()
+      }, 300); // debounce
+    });
+
+
+  </script>
+</body>
+</html>
